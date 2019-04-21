@@ -304,7 +304,8 @@ void LCD_clearScreen(unsigned short color) {
     CS = 1; // CS
 }
 
-void setbg(unsigned short bgcolor)
+void setbg(unsigned short bgcolor) // this function is unnecessary I did not 
+//notice the LCD_clearScreen function before I wrote this
 {
     int i,j;
     for (i=0;i<240;i++)
@@ -368,12 +369,13 @@ void main() {
     initSPI1();    
     LCD_init();
     _CP0_SET_COUNT(0);
-    unsigned short bg=0xC618;
-    unsigned short charcolor=0x0000;
-    unsigned short offcolor=0xffff;
-    unsigned short pg_bar_p=0x0000;
-    unsigned short pg_bar_n=0x035f;
+    unsigned short bg=0xC618; // background color
+    unsigned short charcolor=0x0000; //color of the text
+    unsigned short offcolor=0xffff; // color for text background to distinguish b/w off and on pixels
+    unsigned short pg_bar_p=0x0000; //progress indicator
+    unsigned short pg_bar_n=0x035f; //progress remaining indicator
         int i,j=0;
+        //LCD_drawPixel(50,55,0X0000);
         //LCD_drawchar('S',56,50,0X0000,bg);
         while(1)
         {
@@ -399,9 +401,8 @@ void main() {
                 {
                 LCD_drawPixel(5+i,150+j,pg_bar_n);
                 }
-        }
-            sprintf(str2,"Progress Bar %d",mid);     
-            while(_CP0_GET_COUNT() < 24000000){ ; }
+        }     
+            while(_CP0_GET_COUNT() < 2400000){ ; }
             mid++;
         }
 }
