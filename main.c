@@ -412,7 +412,7 @@ void main() {
         LCD_drawstring(str3,56,200,charcolor,offcolor);
         }
         double clock_1=_CP0_GET_COUNT();
-         while(_CP0_GET_COUNT()-clock_1 < 2400000){ ; }
+         while(_CP0_GET_COUNT()-clock_1 < 2400000){ ; } //100 ms delay
             mid++;
         }
 }
