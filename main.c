@@ -369,24 +369,27 @@ void main() {
     initSPI1();    
     LCD_init();
     _CP0_SET_COUNT(0);
-    unsigned short bg=0xC618; // background color
+    unsigned short bg=0x780F; // background color
     unsigned short charcolor=0x0000; //color of the text
     unsigned short offcolor=0xffff; // color for text background to distinguish b/w off and on pixels
     unsigned short pg_bar_p=0x0000; //progress indicator
-    unsigned short pg_bar_n=0x035f; //progress remaining indicator
+    unsigned short pg_bar_n=0x07ff; //progress remaining indicator
         int i,j=0;
         //LCD_drawPixel(50,55,0X0000);
         //LCD_drawchar('S',56,50,0X0000,bg);
         while(1)
         {
+        _CP0_SET_COUNT(0);
         LCD_clearScreen(bg);
-        char str[25]="Code is working";
-        char str2[25];      
+        char str[50]="Sruthi Venkataramanababu";
+        char str2[25]; 
+        char str3[15];
         LCD_drawstring(str,56,50,charcolor,offcolor);
         int mid =1;
-        while(mid<=200)
+        while(mid<=100)
         {
-        sprintf(str2,"Progress Bar %d",mid); 
+            double clock_cur=_CP0_GET_COUNT();
+        sprintf(str2,"Hello World %d",mid); 
         LCD_drawstring(str2,56,100,charcolor,offcolor);
         for (i=0;i<=mid;i++)
         {
@@ -395,14 +398,21 @@ void main() {
                     LCD_drawPixel(5+i,150+j,pg_bar_p);
                 }
         }
-        for (i=mid+1;i<=200;i++)
+        for (i=mid+1;i<=100;i++)
         {
             for(j=0;j<7;j++)
                 {
                 LCD_drawPixel(5+i,150+j,pg_bar_n);
                 }
-        }     
-            while(_CP0_GET_COUNT() < 2400000){ ; }
+        }   
+        double del_clock=_CP0_GET_COUNT()-clock_cur;  
+        if(del_clock>0)
+        {int fps = 48000000/del_clock;
+         sprintf(str3,"FPS %d",fps); 
+        LCD_drawstring(str3,56,200,charcolor,offcolor);
+        }
+        double clock_1=_CP0_GET_COUNT();
+         while(_CP0_GET_COUNT()-clock_1 < 2400000){ ; }
             mid++;
         }
 }
