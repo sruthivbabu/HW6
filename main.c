@@ -407,7 +407,7 @@ void main() {
         }   
         double del_clock=_CP0_GET_COUNT()-clock_cur;  
         if(del_clock>0)
-        {int fps = 48000000/del_clock;
+        {int fps = 48000000/del_clock; // this calculates fps as the total clock counts per sec divided by the clock counts it takes to render one frame
          sprintf(str3,"FPS %d",fps); 
         LCD_drawstring(str3,56,200,charcolor,offcolor);
         }
